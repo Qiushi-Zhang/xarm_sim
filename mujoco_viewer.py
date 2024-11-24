@@ -6,6 +6,15 @@ import pathlib
 import yaml
 from .callbacks import Callbacks
 
+
+
+
+# find mujoco_viewer.py file by doing  cd .local/lib/python3.10/site-packages/mujoco_viewer/
+
+# replace the original file with this file 
+
+
+
 MUJOCO_VERSION=tuple(map(int, mujoco.__version__.split('.')))
 
 class MujocoViewer(Callbacks):
