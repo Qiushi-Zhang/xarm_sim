@@ -13,6 +13,7 @@ pin_data = pin_model.createData()
 
 mj_model = mujoco.MjModel.from_xml_path("../xarm_description/xarm_mj/xarm7_nohand.xml")
 mj_data = mujoco.MjData(mj_model)
+mj_model.opt.timestep = 0.002
 eeid_mj = 8 
 eeid_pin = pin_model.getFrameId("link7")
 viewer = mujoco_viewer.MujocoViewer(mj_model,mj_data)
@@ -59,8 +60,8 @@ elif mode == "hard_set_q":
 
 # run a inverse dynamics based PD controller with acceleration as action 
 elif mode == "inverse_dynamics_PD_acc":
-    P = 10000
-    D = 500
+    P = 1000
+    D = 50
     while mj_data.time<10:
         t = mj_data.time
         q_des, dq_des, da_des = np.zeros(nq), np.zeros(nq), np.zeros(nq) 
@@ -71,7 +72,7 @@ elif mode == "inverse_dynamics_PD_acc":
         # mj_data.qpos[3] = np.pi/2
         # mj_data.qpos[6] = np.pi/2*np.sin(2*np.pi*t)
         q ,dq= mj_data.qpos, mj_data.qvel 
-        a_des = dq_des+ P*(q_des-q)+D*(dq_des-dq) 
+        a_des = da_des+ P*(q_des-q)+D*(dq_des-dq) 
         tau = pin.rnea(pin_model,pin_data, q, dq, a_des) 
         mj_data.ctrl = tau 
 
