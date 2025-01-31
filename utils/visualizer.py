@@ -56,6 +56,26 @@ def visualize_frame(viewer, T, size=0.1):
     )
     
 
+def visualize_trajectory(viewer, trajectory, color=(0, 1, 1, 1)):
+    """
+    Draws the trajectory as a series of connected line segments and markers in green.
+    """
+    # viewer.marker_count = 0 
+    for i in range(trajectory.shape[1] - 1):
+        # Draw line segments between consecutive points
+        viewer.add_marker(
+            pos=trajectory[:, i],
+            type=mujoco.mjtGeom.mjGEOM_SPHERE,
+            size=[0.02, 0.02, 0.02],  # Sphere marker size
+            rgba=color,
+        )
+        # viewer.add_marker(
+        #     pos=trajectory[:, i + 1],
+        #     type=mujoco.mjtGeom.mjGEOM_LINE,
+        #     size=[0.01, 0.01, 0.01],  # Line thickness
+        #     rgba=color,
+        #     dir=trajectory[:, i + 1] - trajectory[:, i],
+        # )
 
 
 

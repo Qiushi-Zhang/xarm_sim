@@ -45,6 +45,10 @@
   <worldbody>
     <light pos="1 0 1.5" dir="0 0 -1" directional="true"/>
     <light pos="-1 0 1.5" dir="0 0 -1" directional="true"/>
+    <body name = "marker" mocap = "true" pos = "0.4 -0.4 0.4" >
+      <geom type = "sphere" size = "0.02" rgba= "1 0 0 1" contype = "0" conaffinity = "0"/>
+    </body> 
+
     <geom name="floor" size="2.0 1 .1" type="plane" material="wood"/>
     <body name="link_base" pos="0 0 0" childclass="xarm7">
       <inertial pos="-0.021131 -0.0016302 0.056488" quat="0.696843 0.20176 0.10388 0.680376" mass="0.88556"
