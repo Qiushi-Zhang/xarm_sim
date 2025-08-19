@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pinocchio as pin 
 import numpy as np 
 import mujoco_viewer
-from utils import pin_utils
+from utils import robot_utils
 from utils import visualizer 
 from mpc.solver.reach_ddp import solver_ddp_reach
 import glfw
@@ -57,7 +57,7 @@ if mode == "mpc_test":
             i = 0 
             for i in range(T+1):
                 qs = xs[i][:nq]
-                xee[:,i] = pin_utils.forward_kinematics(pin_model,pin_data, eeid_pin,qs)[:3,3]
+                xee[:,i] = robot_utils.forward_kinematics(pin_model,pin_data, eeid_pin,qs)[:3,3]
 
             
             visualizer.visualize_trajectory(viewer, xee, (0,0,1,1))
@@ -103,7 +103,7 @@ if mode == "traj_opt_test":
     xf = xs[-1]
     qf = xf[:nq]
 
-    print("reached EE position", pin_utils.forward_kinematics(pin_model, pin_data, eeid_pin, qf)[:3,3])
+    print("reached EE position", robot_utils.forward_kinematics(pin_model, pin_data, eeid_pin, qf)[:3,3])
     for i in range(n_col):
         xi = xs[i]
         q = xi[:7]

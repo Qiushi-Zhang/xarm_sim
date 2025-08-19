@@ -1,13 +1,15 @@
 import mujoco 
 import sys
 import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir = os.path.dirname(current_dir)
 
-import mujoco.msh2obj_test
+# import mujoco.msh2obj_test
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pinocchio as pin 
 import numpy as np 
 import mujoco_viewer
-from utils import pin_utils
+from utils import robot_utils
 from utils import visualizer
 from pinocchio.visualize import MeshcatVisualizer
 import example_robot_data
@@ -26,11 +28,11 @@ viewer = mujoco_viewer.MujocoViewer(mj_model,mj_data)
 nq = pin_model.nq
 q_init, v_init = np.zeros(nq), np.zeros(nq)
 q_init[2] = np.pi/2
-T_goal = pin_utils.forward_kinematics(pin_model,pin_data,eeid_pin, q_init)
+T_goal = robot_utils.forward_kinematics(pin_model,pin_data,eeid_pin, q_init)
 mj_data.qpos, mj_data.qvel = q_init.copy(), v_init.copy()
 q, v = q_init, v_init
 P = 200
-D = 5
+D = 0.1
 dt = 0.002
 
 x_desired_i = T_goal[:3,3]
@@ -45,31 +47,15 @@ sim_time = 0
 while mj_data.time < 10:
     t = mj_data.time
 
-    q, v = mj_data.qpos, mj_data.qvel 
-    g = pin.computeGeneralizedGravity(pin_model, pin_data, q)
-    T_ee = pin_utils.forward_kinematics(pin_model,pin_data,eeid_pin, q)
-    x_ee = T_ee[:3,3]
-    R_ee = T_ee[:3,:3]
+   
     
-
-    J_ee = pin_utils.compute_jacobian(pin_model, pin_data, eeid_pin, q) 
-
-    V_ee = J_ee@v
-
-    x_desired = x_desired_i+ np.array([0.03*np.cos(2*np.pi*t),0, 0.03*np.sin(2*np.pi*t)])
-    x_err = x_desired - x_ee 
-
-    v_err = np.zeros(3) - V_ee[:3]
-    
-
-    F = P * x_err + D * v_err 
-    tau =  J_ee[:3,:].T @ F
-    
-    mj_data.ctrl = g + tau
+    viewer.render()
     visualizer.visualize_frame(viewer, T_ee)
+    visualizer.visualize_frame(viewer, T_des)
     mujoco.mj_step(mj_model, mj_data)
     
     viewer.render()
+    
     
 
 

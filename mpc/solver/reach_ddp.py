@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pinocchio as pin 
 import numpy as np 
 import mujoco_viewer
-from utils import pin_utils
+from utils import robot_utils
 from utils import visualizer
 from mpc.utils.action import DAM_fwd_example, DAM_fwd_exampleT
 

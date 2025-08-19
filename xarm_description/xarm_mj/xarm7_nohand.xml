@@ -1,7 +1,7 @@
 <mujoco model="xarm7 nohand">
-  <compiler angle="radian" autolimits="true" meshdir="assets"/>
+  <compiler angle="radian" meshdir="assets"/>
 
-  <option integrator="implicitfast"/>
+  
 
   <asset>
     <material name="white" rgba="1 1 1 1"/>
@@ -51,7 +51,7 @@
 
     <geom name="floor" size="2.0 1 .1" type="plane" material="wood"/>
     <body name="link_base" pos="0 0 0" childclass="xarm7">
-      <inertial pos="-0.021131 -0.0016302 0.056488" quat="0.696843 0.20176 0.10388 0.680376" mass="0.88556"
+      <inertial pos="-0.021131 -0.0016302 0.056488" quat="0.696843 0.20176 0.10388 0.680376" mass="0.88556"py
         diaginertia="0.00382023 0.00335282 0.00167725"/>
       <geom mesh="link_base"/>
       <body name="link1" pos="0 0 0.267">
